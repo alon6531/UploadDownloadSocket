@@ -1,6 +1,5 @@
 import socket
 import os
-from Global import get_massage
 
 
 class Server:
@@ -25,7 +24,7 @@ class Server:
         self.init_client_socket()
 
         while True:
-            data = get_massage(self.client_socket)
+            data = self.client_socket.recv(1024).decode()
 
             if data == "upload":
                 self.receive_file()
@@ -65,20 +64,20 @@ class Server:
         for file in dir_list:
             files_list +=str(file) + "\n"
         self.client_socket.send(files_list.encode())
-        filename = get_massage(self.client_socket)
+        filename = self.client_socket.recv(1024).decode()
         return filename
 
     def receive_file(self):
         # the path that the sever store the file that the client sent
         file_path = ".\\recive"
-        filename = get_massage(self.client_socket)
-        file_size = int(get_massage(self.client_socket))
+        filename = self.client_socket.recv(1024).decode()
+        file_size = int(gself.client_socket.recv(1024).decode())
         file_path = file_path + filename
 
         # read the file from client and store it
         with open(file_path, 'wb') as f:
             while file_size > 0:
-                data = get_massage(self.client_socket)
+                data = self.client_socket.recv(1024).decode()
                 if not data:
                     break
                 file_size -= len(data)
