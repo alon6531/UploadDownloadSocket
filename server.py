@@ -62,22 +62,22 @@ class Server:
 
         # prints the file list
         for file in dir_list:
-            files_list +=str(file) + "\n"
+            files_list += str(file) + "\n"
         self.client_socket.send(files_list.encode())
         filename = self.client_socket.recv(1024).decode()
         return filename
 
     def receive_file(self):
         # the path that the sever store the file that the client sent
-        file_path = ".\\recive"
+        file_path = ".\\recive\\"
         filename = self.client_socket.recv(1024).decode()
-        file_size = int(gself.client_socket.recv(1024).decode())
+        file_size = int(self.client_socket.recv(1024).decode())
         file_path = file_path + filename
 
         # read the file from client and store it
         with open(file_path, 'wb') as f:
             while file_size > 0:
-                data = self.client_socket.recv(1024).decode()
+                data = self.client_socket.recv(1024)
                 if not data:
                     break
                 file_size -= len(data)

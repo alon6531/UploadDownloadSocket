@@ -2,7 +2,6 @@ import socket
 import os
 
 
-
 class Client:
     client = 0
 
